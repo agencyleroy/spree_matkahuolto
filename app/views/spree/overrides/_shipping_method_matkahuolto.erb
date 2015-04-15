@@ -1,0 +1,33 @@
+<ul class="field radios shipping-methods unstyled">
+<% ship_form.object.shipping_rates.includes(:shipping_method).reorder('spree_shipping_methods.admin_name ASC').each do |rate| %>
+  <li class="small-12 large-offset-1 large-11 columns shipping-method">
+
+    <%= ship_form.radio_button :selected_shipping_rate_id, rate.id, :checked => false %>
+    <%= ship_form.label "selected_shipping_rate_id_#{rate.id}", "<span class='rate-name'>#{rate.name}</span>
+    <span class='rate-coss'>#{shipping_rate_display_price(rate)}</span>".html_safe, :class => "shipping-method-radio input-helper input-helper--radio" %>
+
+    <% if rate.shipping_method.admin_name.include? "matkahuolto_lahella" %>
+      <ul class="matkahuolto-destination-list unstyled" id="matkahuolto-destination-list" data-shipping_method_id="<%= rate.id %>">
+        <li><input type="hidden" id="matkahuolto_selected_destination_id" name="matkahuolto_selected_destination_id" value="<%= @matkahuolto_selected_destination_code %>"></li>
+        <% @matkahuolto_destinations.each do |destination| %>
+
+          <% @active_class = '' %>
+
+          <% if @matkahuolto_selected_destination_code == destination.id.to_i %>
+            <% @active_class = 'class="active"'.html_safe %>
+          <% end %>
+          <% destination.distance = "0" unless destination.distance %>
+          <li class="matkahuolto-destination" data-id="<%= destination.id %>" <%= @active_class %> >
+            <%= destination.name + ", " + destination.street_address + ", " + destination.postal_code +  " " + destination.city + ". " + Spree.t(:distance) + ": " + destination.distance + " km"  %>
+          </li>
+        <% end %>
+
+        <% if @matkahuolto_destinations.length < 1 %>
+          <li class="no-destinations"><%= Spree.t(:matkahuolto_destination_not_found) %></li>
+        <% end %>
+
+      </ul>
+    <% end %>
+  </li>
+<% end %>
+</ul>
