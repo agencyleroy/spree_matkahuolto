@@ -2,10 +2,6 @@ Spree::CheckoutController.class_eval do
   before_filter :load_matkahuolto_delivery
   before_filter :save_matkahuolto_destination_shipment
 
-  def edit
-    @no_header = true
-  end
-
   def load_matkahuolto_delivery
     return unless ["delivery"].include? @order.state
 
