@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["silvain@agencyleroy.com"]
   spec.summary       = "Spree extension for integration with the delivery service Matkahuolto"
   spec.description   = spec.summary
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/agencyleroy/spree_matkahuolto"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
