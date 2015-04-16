@@ -4,17 +4,20 @@ Spree::Admin::OrdersController.class_eval do
     @order = Spree::Order.find_by(number:params[:id])
     return unless @order
 
-    label_api = Matkahuolto::API::ShippingLabel.new(
-      ENV["#{Rails.env.upcase}_MATKAHUOLTO_USERNAME"],
-      ENV["#{Rails.env.upcase}_MATKAHUOLTO_PASSWORD"],
-      ENV["#{Rails.env.upcase}_MATKAHUOLTO_TEST_MODE"]
+    label_api = SpreeMatkahuolto::API::ShippingLabel.new(
+      Rails.configuration.x.matkahuolto_username,
+      Rails.configuration.x.matkahuolto_password,
+      Rails.configuration.x.matkahuolto_test_mode,
+      # ENV["#{Rails.env.upcase}_MATKAHUOLTO_USERNAME"],
+      # ENV["#{Rails.env.upcase}_MATKAHUOLTO_PASSWORD"],
+      # ENV["#{Rails.env.upcase}_MATKAHUOLTO_TEST_MODE"]
     )
 
     shipments = []
 
     @order.shipments.each do |s|
       # TODO: Change API Login
-      m_shipment = Matkahuolto::Shipment.new(Spree::Config.matkahuolto_username)
+      m_shipment = SpreeMatkahuolto::Shipment.new(Rails.configuration.x.matkahuolto_username)
 
       if s.shipping_method.admin_name.include? "matkahuolto_lahella"
         destination_code = Spree::MatkahuoltoShipment.where(order_id: @order.id).first.try(:destination_code)
@@ -42,23 +45,21 @@ Spree::Admin::OrdersController.class_eval do
       end
       m_shipment.weight = total_weight.to_s
 
-      # This builds the custom_shipment for older orders. New shipments are built with the custom_shipment automatically
-      if not s.try(:custom_shipment)
-        s.custom_shipment = CustomShipment.create(shipment_id:s.id)
-      end
-      # End
-      if s.custom_shipment.has_matkahuolto
+      
+      custom_s = SpreeMatkahuoltoCustomShipment.find_by(shipment_id:s.id)
+      if custom_s and custom_s.has_matkahuolto
         m_shipment.message_type = "C"
       else
-        custom_s = s.custom_shipment
+        if not custom_s
+          custom_s = SpreeMatkahuoltoCustomShipment.create(shipment_id:s.id)
+        end
         custom_s.has_matkahuolto = true
         custom_s.save
       end
       shipments.push m_shipment
     end
-
+    
     label = label_api.get_labels(shipments)
-
     send_file label[:path], filename: label[:filename], type: "application/pdf"
   end
 

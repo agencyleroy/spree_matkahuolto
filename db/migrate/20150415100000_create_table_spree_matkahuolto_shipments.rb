@@ -1,4 +1,4 @@
-class CreateSpreeMatkahuoltoShipments < ActiveRecord::Migration
+class CreateTableSpreeMatkahuoltoShipments < ActiveRecord::Migration
   def change
     create_table :spree_matkahuolto_shipments do |t|
       t.references :order, index: true

@@ -1,4 +1,7 @@
 require 'fileutils'
+require 'Gyoku'
+require 'Nori'
+require 'RestClient'
 
 
 # Tuotetietokentissä käytettävät arvot ovat seuraavat;

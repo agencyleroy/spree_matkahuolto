@@ -5,7 +5,7 @@ Spree::CheckoutController.class_eval do
   def load_matkahuolto_delivery
     return unless ["delivery"].include? @order.state
 
-    api = Matkahuolto::API::OfficeFinder.new(Spree::Config.matkahuolto_username)
+    api = SpreeMatkahuolto::API::OfficeFinder.new(Rails.configuration.x.matkahuolto_username)
     @matkahuolto_destinations = api.find(@order.ship_address.address1, @order.ship_address.zipcode, @order.ship_address.city)
     @matkahuolto_selected_destination_code = Spree::MatkahuoltoShipment.where(order_id: @order.id).first.try(:destination_code)
   end
