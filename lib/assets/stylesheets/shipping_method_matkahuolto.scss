@@ -1,3 +1,6 @@
+$light-gray: #f1f1f1;
+$black: #000;
+
 .matkahuolto-destination-list {
 
   &.hidden {
@@ -8,7 +11,7 @@
     padding: 0.5em 0.5em;
     font-size: 14px;
     &.active, &:hover {
-      background-color: $yellow;
+      background-color: $light-gray;
       cursor: pointer;
       color: $black;
     }

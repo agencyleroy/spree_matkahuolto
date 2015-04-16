@@ -37,12 +37,12 @@ module SpreeMatkaHuolto
       paths["app/controllers"] << "lib/controllers/spree/admin"
       paths["app/overrides"] << "lib/overrides/backend"
       paths["app/models"] << "lib/models/decorators"
-      paths["app/views"] << "lib/views/spree/overrides/admin"
+      paths["app/views"] << "lib/views/spree"
     end
 
     if self.frontend_available?
       paths["app/overrides"] << "lib/overrides/frontend" 
-      paths["app/views"] << "lib/views/spree/overrides/frontend"
+      paths["app/views"] << "lib/views/spree"
     end
 
     config.to_prepare &method(:activate).to_proc

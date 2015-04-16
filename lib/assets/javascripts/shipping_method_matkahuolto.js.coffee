@@ -1,4 +1,5 @@
 $(document).ready ->
+  alert('a')
   list = $('.matkahuolto-destination-list')
   return unless list.length > 0
 
