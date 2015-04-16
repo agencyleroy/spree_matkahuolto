@@ -30,7 +30,7 @@ And add this requirement to your application.scss
 
 ## Usage
 
-Give access to for Rails your Matkahuolto credentials (username, password and test_mode) as environment variables:
+Give Rails access to your Matkahuolto credentials (username, password and test_mode) as environment variables:
     
     ENV["#{Rails.env.upcase}_MATKAHUOLTO_USERNAME"]
     
