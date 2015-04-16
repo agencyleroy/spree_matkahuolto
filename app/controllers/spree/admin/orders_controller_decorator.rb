@@ -5,9 +5,9 @@ Spree::Admin::OrdersController.class_eval do
     return unless @order
 
     label_api = Matkahuolto::API::ShippingLabel.new(
-      Spree::Config.matkahuolto_username,
-      Spree::Config.matkahuolto_password,
-      Spree::Config.matkahuolto_test_mode
+      ENV["#{Rails.env.upcase}_MATKAHUOLTO_USERNAME"],
+      ENV["#{Rails.env.upcase}_MATKAHUOLTO_PASSWORD"],
+      ENV["#{Rails.env.upcase}_MATKAHUOLTO_TEST_MODE"]
     )
 
     shipments = []
