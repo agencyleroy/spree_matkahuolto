@@ -23,6 +23,8 @@ Gem::Specification.new do |spec|
   
   spec.add_dependency "gyoku", "~> 1.0"
   spec.add_dependency "nori"
+  spec.add_dependency "whenever"
+  spec.add_dependency "sidekiq"
   spec.add_dependency "rest-client"
   spec.add_dependency "htmlentities"
 
