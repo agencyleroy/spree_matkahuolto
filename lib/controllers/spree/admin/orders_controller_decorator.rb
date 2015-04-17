@@ -47,19 +47,27 @@ Spree::Admin::OrdersController.class_eval do
 
       
       custom_s = SpreeMatkahuoltoCustomShipment.find_by(shipment_id:s.id)
-      if custom_s and custom_s.has_matkahuolto
-        m_shipment.message_type = "C"
-      else
-        if not custom_s
-          custom_s = SpreeMatkahuoltoCustomShipment.create(shipment_id:s.id)
-        end
-        custom_s.has_matkahuolto = true
-        custom_s.save
+      if custom_s and custom_s.label_file_name
+        # m_shipment.message_type = "C"
+        return send_file custom_s.label.path, type: "application/pdf"
       end
+
       shipments.push m_shipment
     end
     
     label = label_api.get_labels(shipments)
+
+    @order.shipments.each do |s|
+      custom_s = SpreeMatkahuoltoCustomShipment.find_by(shipment_id:s.id)
+      if not custom_s
+        custom_s = SpreeMatkahuoltoCustomShipment.create(shipment_id:s.id)
+      end
+      label_path = label[:path]
+      label_file = File.open(label_path, 'r')
+      custom_s.label = label_file
+      custom_s.save
+    end
+
     send_file label[:path], filename: label[:filename], type: "application/pdf"
   end
 
