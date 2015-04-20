@@ -1,6 +1,6 @@
 require 'fileutils'
-require 'Gyoku'
-require 'Nori'
+require 'gyoku'
+require 'nori'
 require 'RestClient'
 
 
