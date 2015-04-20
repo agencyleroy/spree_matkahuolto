@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'gyoku'
 require 'nori'
-require 'RestClient'
+require 'rest-client'
 
 
 # Tuotetietokentissä käytettävät arvot ovat seuraavat;
