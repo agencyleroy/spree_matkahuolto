@@ -7,7 +7,11 @@ module SpreeMatkaHuolto
     initializer "spree.matkahuolto.preferences", :after => "spree.register.payment_methods" do |app|
         app.config.x.matkahuolto_username =  ENV["#{Rails.env.upcase}_MATKAHUOLTO_USERNAME"]
         app.config.x.matkahuolto_password =  ENV["#{Rails.env.upcase}_MATKAHUOLTO_PASSWORD"]
-        app.config.x.matkahuolto_test_mode =  ENV["#{Rails.env.upcase}_MATKAHUOLTO_TEST_MODE"]
+        if ENV["#{Rails.env.upcase}_MATKAHUOLTO_TEST_MODE"] == "true" # Figaro provides boolean in ENV as string
+          app.config.x.matkahuolto_test_mode = true
+        else 
+          app.config.x.matkahuolto_test_mode = false
+        end
     #   app.config.spree.payment_methods << Spree::Gateway::Worldpay
     end
 
