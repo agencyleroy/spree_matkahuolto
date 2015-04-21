@@ -140,7 +140,7 @@ module SpreeMatkahuolto
         return nil unless shipments
         #shipments = [shipments] unless shipments.is_a?(Array)
 
-        if @test_mode
+        if @test_mode == true
           endpoint = TEST_ENDPOINT
         else
           endpoint = PRODUCTION_ENDPOINT
