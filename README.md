@@ -37,6 +37,8 @@ Give Rails access to your Matkahuolto credentials (username, password and test_m
     ENV["#{Rails.env.upcase}_MATKAHUOLTO_PASSWORD"]
     
     ENV["#{Rails.env.upcase}_MATKAHUOLTO_TEST_MODE"]
+    
+[NOTE: Because ENV should only contain string, value of ENV["#{Rails.env.upcase}_MATKAHUOLTO_TEST_MODE"] should be either "true" or "false"]
 
 In the Spree backend, shipping methods which internal names contains the following will be automatically linked to Matkahuolto backend:
 
