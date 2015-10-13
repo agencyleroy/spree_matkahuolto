@@ -1,3 +1,3 @@
 <% if shipment.shipping_method and ( shipment.shipping_method.admin_name.include?'matkahuolto_lahella' or shipment.shipping_method.admin_name.include?'matkahuolto_jako' ) %>
-  <%= link_to 'Print Labels', get_matkahuolto_labels_admin_order_path(@order), target: '_blank' %>
+  <%= link_to 'Print Labels', get_matkahuolto_labels_admin_order_path(@order,shipment), target: '_blank' %>
 <% end %>
