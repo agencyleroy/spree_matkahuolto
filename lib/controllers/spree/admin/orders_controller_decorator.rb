@@ -2,6 +2,8 @@ Spree::Admin::OrdersController.class_eval do
 
   def matkahuolto_labels
 
+    @order = Spree::Order.find_by(number:params[:id])
+    return unless @order
     s = Spree::Shipment.find_by(number:params[:shipment_id])
     return unless s
 
