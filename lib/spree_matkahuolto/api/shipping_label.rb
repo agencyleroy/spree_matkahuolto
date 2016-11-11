@@ -149,7 +149,7 @@ module SpreeMatkahuolto
         request = build_request(shipments)
 
         begin
-          response = RestClient.post endpoint, request, content_type: 'text/xml', accept: :xml
+          response = RestClient.post endpoint, request, content_type: 'text/xml', accept: 'text/xml'
         rescue => e
           Rollbar.error(e)
           raise e
