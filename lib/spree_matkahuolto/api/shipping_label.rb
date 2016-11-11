@@ -147,7 +147,13 @@ module SpreeMatkahuolto
         end
 
         request = build_request(shipments)
-        response = RestClient.post endpoint, request, :content_type => 'text/xml', :accept => :xml
+
+        begin
+          response = RestClient.post endpoint, request, content_type: 'text/xml', accept: :xml
+        rescue => e
+          Rollbar.error(e)
+          raise e
+        end
 
         parser = Nori.new
         parsed_data = parser.parse(response)
@@ -200,7 +206,7 @@ module SpreeMatkahuolto
             request['MHShipmentRequest']['Shipment'].push s
           end
 
-          Gyoku.xml(request, { :key_converter => :none })
+          Gyoku.xml(request, { key_converter: :none })
         end
 
     end
